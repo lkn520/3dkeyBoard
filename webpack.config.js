@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin('stylesheets/[name].css');
+const extractCss = new ExtractTextPlugin('stylesheets/[name]-2.css');
 
 module.exports = {
     mode: 'development',
@@ -29,13 +30,10 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader', options: { importLoaders: 1}
-                    },
-                    'postcss-loader'
-                ]
+                use: extractCss.extract({
+                    fallback: 'style-loader',
+                    use: [{loader: 'css-loader', options: {importLoaders: 1}}, 'postcss-loader']
+                })
             },
             {
                 test: /\.scss$/,
@@ -54,14 +52,10 @@ module.exports = {
     },
     plugins: [
         extractSass,
+        extractCss,
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './index.html',
-            keyboards: [
-                {
-                    key: '1'
-                }
-            ]
+            template: './index.html'
         })
     ]
 }

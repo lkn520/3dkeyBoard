@@ -2,9 +2,11 @@
  * Created by Chelly on 2018/5/28.
  */
 import './sass/main.scss';
+import './css/style.css';
 import jQuery from 'jquery';
 
 (function($) {
+    "use strict";
 
     const G = 0.002;
     const T = 1000/60;
@@ -15,7 +17,6 @@ import jQuery from 'jquery';
     let base = $('.base');
 
     $(document).on('keydown', function (ev) {
-        console.log(ev)
         let keyboard = findKeyBoard(ev.key);
         keyboard.addClass('active');
 
@@ -62,7 +63,7 @@ import jQuery from 'jquery';
             time += T;
 
             if ($(elem).offset().top > WINDOW_H) {
-                clearInterval(timer)
+                clearInterval(timer);
                 $(elem).remove();
                 return
             }
@@ -87,4 +88,4 @@ import jQuery from 'jquery';
         }
     }
 
-})(jQuery);
+}(jQuery));
